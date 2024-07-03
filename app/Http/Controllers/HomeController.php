@@ -14,6 +14,11 @@ class HomeController extends Controller
         return view('home.index', compact('movies'));
     }
 
+    public function adminHome()
+    {
+        return view('dashboard');
+    }
+
     public function show($id)
     {
         $movie = Movie::findOrFail($id);

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SeatController;
@@ -49,14 +51,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/profile', [AdminController::class, 'profilepage'])->name('admin/profile');
 
-    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin/products');
-    Route::get('/admin/products/create', [ProductController::class, 'create'])->name('admin/products/create');
-    Route::post('/admin/products/store', [ProductController::class, 'store'])->name('admin/products/store');
-    Route::get('/admin/products/show/{id}', [ProductController::class, 'show'])->name('admin/products/show');
-    Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('admin/products/edit');
-    Route::put('/admin/products/edit/{id}', [ProductController::class, 'update'])->name('admin/products/update');
-    Route::delete('/admin/products/destroy/{id}', [ProductController::class, 'destroy'])->name('admin/products/destroy');
-
     Route::get('/admin/movies', [MovieController::class, 'index'])->name('admin/movies');
     Route::get('/admin/movies/create', [MovieController::class, 'create'])->name('admin/movies/create');
     Route::post('/admin/movies/store', [MovieController::class, 'store'])->name('admin/movies/store');
@@ -88,5 +82,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/schedules/edit/{id}', [ScheduleController::class, 'edit'])->name('admin/schedules/edit');
     Route::put('/admin/schedules/edit/{id}', [ScheduleController::class, 'update'])->name('admin/schedules/update');
     Route::delete('/admin/schedules/destroy/{id}', [ScheduleController::class, 'destroy'])->name('admin/schedules/destroy');
+
+    Route::resource('bookings', BookingController::class);
+    Route::get('payments/create/{bookingId}', [PaymentController::class, 'create'])->name('payments.create');
+    Route::post('payments/store', [PaymentController::class, 'store'])->name('payments.store');
 
 });
